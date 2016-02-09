@@ -5,11 +5,14 @@
         [%- IF c.debug -%][%- INCLUDE 'debug/stats.tt' -%][%- END ~%]
 
         <div class="header">
-            <div class="top">
-                [%- INCLUDE "layout/header/top.tt" -%]
-            </div>
-            <div class="bottom">
-                [%- INCLUDE "layout/header/bottom.tt" -%]
+            <a href="/" title="MusicBrainz"><img src="/static/images/layout/navbar-logo.svg" class="logo" /></a>
+            <div class="right">
+                <div class="top">
+                    [%- INCLUDE "layout/header/top.tt" -%]
+                </div>
+                <div class="bottom">
+                    [%- INCLUDE "layout/header/bottom.tt" -%]
+                </div>
             </div>
         </div>
 

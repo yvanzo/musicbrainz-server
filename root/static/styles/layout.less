@@ -127,180 +127,180 @@ pre code {
 */
 .header {
     @menu-item-text-padding: 8px;
+    @logo-width: 166px;
+    @logo-height: 26px;
 
     margin-bottom: 20px;
-    margin-top: 16px;
-    margin-left: 16px-@menu-item-text-padding;
-    margin-right: 16px-@menu-item-text-padding;
+    margin-top: 17px;
+    margin-left: 16px;
+    margin-right: 16px;
+    clear: both;
 
-    .top {
-        padding: 0px 0px 5px @menu-item-text-padding;
-        height: 38px;
-        clear: both;
-
-        .logo-container {
-            width: 25%;
-            float: left;
-            img {
-                height: 28px;
-            }
-        }
-
-        .search-container {
-            @item-height: 25px;
-            @outer-border-color: fade(@musicbrainz-purple, 50%);
-            @inner-border-color: @medium-border;
-
-            width: 50%;
-            float: left;
-            margin: 0 auto;
-            margin-top: 5px;
-            form {
-                width: 284px;
-                margin: 0 auto;
-                input#headerid-query {
-                    width: 150px;
-                    height: @item-height;
-                    padding-left: 6px;
-                    padding-right: 6px;
-                    font-size: 1rem;
-                    border: 1px solid @outer-border-color;
-                    border-right-color: @inner-border-color;
-                }
-                select#headerid-type {
-                    width: 98px;
-                    height: @item-height;
-                    border-radius: 0;
-                    font-size: 1rem;
-                    background-color: #fff;
-                    border: 1px solid @outer-border-color;
-                    border-left-color: @inner-border-color;
-                    border-right-color: @inner-border-color;
-                    padding-left: 6px;
-                    padding-right: 6px;
-                    margin-left: -5px;
-                    -webkit-appearance: none;
-                    -webkit-border-radius: 0px;
-                    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1…0px'><text x='0' y='15' fill='black' font-size='15'>&#x25BE;</text></svg>");
-                    background-position-x: 78px;
-                    background-position-y: 1px;
-                }
-                input#headerid-method {
-                    display: none;
-                }
-                .buttons button {
-                    width: 30px;
-                    height: @item-height;
-                    border-radius: 0;
-                    font-size: 1rem;
-                    background-color: #fff;
-                    border: 1px solid @outer-border-color;
-                    border-left-color: @inner-border-color;
-                    margin-left: -5px;
-                    img {
-                        margin: 0 -1px -3px 0px !important;
-                    }
-                }
-            }
-        }
-
-        .links-container {
-            width: 25%;
-            float: left;
-            ul.menu {
-                float: right;
-                margin-top: 5px;
-                font-weight: bold;
-                li {
-                    a {
-                        padding: @menu-item-text-padding;
-                    }
-                    img.gravatar {
-                        vertical-align: text-top;
-                    }
-                }
-            }
-        }
-
+    img.logo {
+        width: @logo-width;
+        height: @logo-height;
+        margin-top: 13px;
     }
 
-    .bottom {
-        clear: both;
-        font-size: @small-text;
-        font-weight: bold;
-        height: 29px;
-        background-color: @musicbrainz-purple;
+    .right {
+        width: ~"calc(100% - @{logo-width} - 32px)";
+        float: right;
+
+        .top {
+            height: 32px;
+            border-bottom: @musicbrainz-purple 2px solid;
+            clear: both;
+
+            .search-container {
+                @item-height: 25px;
+                @outer-border-color: fade(@musicbrainz-purple, 50%);
+                @inner-border-color: @medium-border;
+
+                float: right;
+                form {
+                    width: 284px;
+                    margin: 0 auto;
+                    input#headerid-query {
+                        width: 150px;
+                        height: @item-height;
+                        padding-left: 6px;
+                        padding-right: 6px;
+                        font-size: 1rem;
+                        border: 1px solid @outer-border-color;
+                        border-right-color: @inner-border-color;
+                    }
+                    select#headerid-type {
+                        width: 98px;
+                        height: @item-height;
+                        border-radius: 0;
+                        font-size: 1rem;
+                        background-color: #fff;
+                        border: 1px solid @outer-border-color;
+                        border-left-color: @inner-border-color;
+                        border-right-color: @inner-border-color;
+                        padding-left: 6px;
+                        padding-right: 6px;
+                        margin-left: -5px;
+                        -webkit-appearance: none;
+                        -webkit-border-radius: 0px;
+                        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1…0px'><text x='0' y='15' fill='black' font-size='15'>&#x25BE;</text></svg>");
+                        background-position-x: 78px;
+                        background-position-y: 1px;
+                    }
+                    input#headerid-method {
+                        display: none;
+                    }
+                    .buttons button {
+                        width: 30px;
+                        height: @item-height;
+                        border-radius: 0;
+                        font-size: 1rem;
+                        background-color: #fff;
+                        border: 1px solid @outer-border-color;
+                        border-left-color: @inner-border-color;
+                        margin-left: -5px;
+                        img {
+                            margin: 0 -1px -3px 0px !important;
+                        }
+                    }
+                }
+            }
+
+            .links-container {
+                float: left;
+                ul.menu {
+                    font-weight: bold;
+                    li {
+                        a {
+                            padding: @menu-item-text-padding;
+                            font-size: 1.1em;
+                        }
+                        img.gravatar {
+                            vertical-align: text-top;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .bottom {
+            clear: both;
+            font-size: @small-text;
+            font-weight: bold;
+            height: 29px;
+
+            ul.menu {
+                li a {
+                    padding: @menu-item-text-padding;
+                }
+                li.language-selector {
+                    float: right;
+                }
+            }
+        }
 
         ul.menu {
-            li a {
-                padding: @menu-item-text-padding;
-                color: @text-white;
-            }
-            li.language-selector {
-                float: right;
-            }
-        }
-    }
-
-    ul.menu {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        list-style-type: none;
-        list-style-image: none;
-
-        li {
-            float: left;
+            margin: 0;
+            padding: 0;
+            height: 100%;
             list-style-type: none;
             list-style-image: none;
 
-            a {
-                color: @effectively-black-text;
-                display: block;
-                
-                height: 100%;
-                text-decoration: none;
-            }
+            li {
+                float: left;
+                list-style-type: none;
+                list-style-image: none;
 
-            li a {
-                height: auto;
-            }
+                a {
+                    color: @musicbrainz-purple;
+                    display: block;
+                    
+                    height: 100%;
+                    text-decoration: none;
+                }
 
-            ul {
-                position: absolute;
-                left: -10000px;
-                z-index: 9;
-                padding-left: 0px;
+                li a {
+                    height: auto;
+                }
 
-                li {
-                    text-align: left;
-                    float: none;
-                    font-weight: normal;
-                    margin: 0;
-                    background-color: @medium-bg;
-                    a {
-                        padding-top: 5px !important;
-                        padding-bottom: 5px !important;
+                ul {
+                    position: absolute;
+                    left: -10000px;
+                    z-index: 9;
+                    padding-left: 0px;
+
+                    li {
+                        text-align: left;
+                        float: none;
+                        font-weight: normal;
+                        margin: 0;
+                        background-color: @medium-bg;
+                        a {
+                            padding-top: 5px !important;
+                            padding-bottom: 5px !important;
+                        }
                     }
                 }
             }
+
+            li:hover a,
+            li:hover li a:hover,
+            a:hover {
+                background-color: @musicbrainz-orange;
+                color: @text-white;
+            }
+
+            li:hover li a {
+                background-color: @medium-bg;
+                color: @text-black;
+            }
         }
 
-        li:hover a,
-        li:hover li a:hover,
-        a:hover {
-            background-color: @musicbrainz-orange;
-            color: @text-white;
+        .separator {
+            border-top: 1px dotted;
         }
 
-        li:hover li a {
-            background-color: @medium-bg;
-            color: @text-black;
-        }
-    }
-
-    .separator {
-        border-top: 1px dotted;
     }
 }
 
