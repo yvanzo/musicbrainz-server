@@ -517,7 +517,11 @@ const CLEANUPS = {
       new RegExp("^(https?://)?(www\\.)?avexnet\\.jp/id/[a-z0-9]{5}/discography/product/[A-Z0-9]{4}-[0-9]{5}\\.html$", "i"),
       new RegExp("^(https?://)?(www\\.)?kingrecords\\.co\\.jp/cs/g/g[A-Z]{4}-[0-9]+/$", "i")
     ],
-    type: LINK_TYPES.discographyentry
+    type: LINK_TYPES.discographyentry,
+    validate: function (url, id) {
+      // avoid wikipedia being added as release-level discography entry
+      return !/^(https?:\/\/)?([^.\/]+\.)?wikipedia\.org\//.test(url);
+    },
   },
   cdjapan: {
     match: [new RegExp("^(https?://)?(www\\.)?cdjapan\\.co\\.jp/(product|person)/", "i")],
@@ -1072,12 +1076,6 @@ validationRules[LINK_TYPES.setlistfm.event] = function (url) {
 
 validationRules[LINK_TYPES.setlistfm.place] = function (url) {
   return /setlist\.fm\/venue\//.test(url);
-};
-
-// avoid wikipedia being added as release-level discography entry
-var isWikipedia = /^(https?:\/\/)?([^.]+\.)?wikipedia\.org\//;
-validationRules[LINK_TYPES.discographyentry.release] = function (url) {
-  return !isWikipedia.test(url);
 };
 
 function validateFacebook(url) {
