@@ -335,18 +335,18 @@ const CLEANUPS = {
     validate: function (url, id) {
       var m = /^http:\/\/www\.imdb\.com\/(name\/nm|title\/tt|character\/ch|company\/co)[0-9]{7}\/$/.exec(url);
       if (m) {
-        var type = m[1];
+        var prefix = m[1];
         switch (id) {
           case LINK_TYPES.imdb.artist:
-            return type === 'name/nm' || type === 'character/ch' || type === 'company/co';
+            return prefix === 'name/nm' || prefix === 'character/ch' || prefix === 'company/co';
           case LINK_TYPES.imdb.label:
           case LINK_TYPES.imdb.place:
-            return type === 'company/co';
+            return prefix === 'company/co';
           case LINK_TYPES.imdb.recording:
           case LINK_TYPES.imdb.release:
           case LINK_TYPES.imdb.release_group:
           case LINK_TYPES.imdb.work:
-            return type === 'title/tt';
+            return prefix === 'title/tt';
         }
       }
       return false;
