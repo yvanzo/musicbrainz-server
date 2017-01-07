@@ -443,8 +443,7 @@ const CLEANUPS = {
       }
     },
     validate: function (url, id) {
-      return id === LINK_TYPES.amazon.release
-          && /^http:\/\/www\.amazon\.(com|ca|co\.uk|fr|at|de|it|co\.jp|jp|cn|es|in|com\.br|com\.mx)\//.test(url);
+      return /^http:\/\/www\.amazon\.(com|ca|co\.uk|fr|at|de|it|co\.jp|jp|cn|es|in|com\.br|com\.mx)\//.test(url);
     }
   },
   archive: {
