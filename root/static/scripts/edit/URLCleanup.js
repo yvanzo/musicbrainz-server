@@ -299,18 +299,22 @@ const CLEANUPS = {
       return url;
     },
     validate: function (url, id) {
-      switch (id) {
-        case LINK_TYPES.discogs.artist:
-          return /^https:\/\/www\.discogs\.com\/(?:artist\/[1-9][0-9]*|user\/.+)$/.test(url);
-        case LINK_TYPES.discogs.label:
-        case LINK_TYPES.discogs.series:
-          return /^https:\/\/www\.discogs\.com\/label\/[1-9][0-9]*$/.test(url);
-        case LINK_TYPES.discogs.place:
-          return /^https:\/\/www\.discogs\.com\/(?:artist|label)\/[1-9][0-9]*$/.test(url);
-        case LINK_TYPES.discogs.release_group:
-          return /^https:\/\/www\.discogs\.com\/master\/[1-9][0-9]*$/.test(url);
-        case LINK_TYPES.discogs.release:
-          return /^https:\/\/www\.discogs\.com\/release\/[1-9][0-9]*$/.test(url);
+      var m = /^https:\/\/www\.discogs\.com\/(?:(artist|label|master|release)\/[1-9][0-9]*|(user)\/.+)$/.exec(url);
+      if (m) {
+        var prefix = m[1] || m[2];
+        switch (id) {
+          case LINK_TYPES.discogs.artist:
+            return prefix === 'artist' || prefix === 'user';
+          case LINK_TYPES.discogs.label:
+          case LINK_TYPES.discogs.series:
+            return prefix === 'label';
+          case LINK_TYPES.discogs.place:
+            return prefix === 'artist' || prefix === 'label';
+          case LINK_TYPES.discogs.release_group:
+            return prefix === 'master';
+          case LINK_TYPES.discogs.release:
+            return prefix === 'release';
+        }
       }
       return false;
     }
