@@ -810,16 +810,16 @@ const CLEANUPS = {
     validate: function (url, id) {
       var m = /^http:\/\/vgmdb\.net\/(album|artist|org|event)\/[1-9][0-9]*$/.exec(url);
       if (m) {
-        var type = m[1];
+        var prefix = m[1];
         switch (id) {
           case LINK_TYPES.vgmdb.artist:
-            return (type === 'artist' || type === 'org');
+            return prefix === 'artist' || prefix === 'org';
           case LINK_TYPES.vgmdb.release:
-            return type === 'album';
+            return prefix === 'album';
           case LINK_TYPES.vgmdb.label:
-            return type === 'org';
+            return prefix === 'org';
           case LINK_TYPES.vgmdb.event:
-            return type === 'event';
+            return prefix === 'event';
         }
       }
       return false;
