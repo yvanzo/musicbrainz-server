@@ -387,17 +387,21 @@ const CLEANUPS = {
       return url.replace(/^https?:\/\/(?:[^.]+\.)?allmusic\.com\/(artist|album(?:\/release)?|composition|song|performance)\/(?:[^\/]*-)?((?:mn|mw|mc|mt|mq|mr)[0-9]+).*/, "http://www.allmusic.com/$1/$2");
     },
     validate: function (url, id) {
-      switch (id) {
-        case LINK_TYPES.allmusic.artist:
-          return /^http:\/\/www\.allmusic\.com\/artist\/mn[0-9]{10}$/.test(url);
-        case LINK_TYPES.allmusic.release_group:
-          return /^http:\/\/www\.allmusic\.com\/album\/mw[0-9]{10}$/.test(url);
-        case LINK_TYPES.allmusic.work:
-          return /^http:\/\/www\.allmusic\.com\/(?:composition\/mc|song\/mt)[0-9]{10}$/.test(url);
-        case LINK_TYPES.allmusic.recording:
-          return /^http:\/\/www\.allmusic\.com\/performance\/mq[0-9]{10}$/.test(url);
-        case LINK_TYPES.allmusic.release:
-          return /^http:\/\/www\.allmusic\.com\/album\/release\/mr[0-9]{10}$/.test(url);
+      var m = /^http:\/\/www\.allmusic\.com\/([a-z\/]+)[0-9]{10}$/.exec(url);
+      if (m) {
+        var prefix = m[1];
+        switch (id) {
+          case LINK_TYPES.allmusic.artist:
+            return prefix === 'artist/mn';
+          case LINK_TYPES.allmusic.recording:
+            return prefix === 'performance/mq';
+          case LINK_TYPES.allmusic.release:
+            return prefix === 'album/release/mr';
+          case LINK_TYPES.allmusic.release_group:
+            return prefix === 'album/mw';
+          case LINK_TYPES.allmusic.work:
+            return prefix === 'composition/mc' || prefix === 'song/mt';
+        }
       }
       return false;
     }
