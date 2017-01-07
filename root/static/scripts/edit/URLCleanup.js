@@ -655,15 +655,19 @@ const CLEANUPS = {
     match: [new RegExp("^(https?://)?([^/]+\\.)?secondhandsongs\\.com/", "i")],
     type: LINK_TYPES.secondhandsongs,
     validate: function (url, id) {
-      switch (id) {
-        case LINK_TYPES.secondhandsongs.artist:
-          return /secondhandsongs\.com\/artist\//.test(url);
-        case LINK_TYPES.secondhandsongs.release:
-          return /secondhandsongs\.com\/release\//.test(url);
-        case LINK_TYPES.secondhandsongs.work:
-          return /secondhandsongs\.com\/work\//.test(url);
+      var m = /secondhandsongs\.com\/([a-z]+)\//.exec(url);
+      if (m) {
+        var prefix = m[1];
+        switch (id) {
+          case LINK_TYPES.secondhandsongs.artist:
+            return prefix === 'artist';
+          case LINK_TYPES.secondhandsongs.release:
+            return prefix === 'release';
+          case LINK_TYPES.secondhandsongs.work:
+            return prefix === 'work';
+        }
       }
-      return true;
+      return false;
     }
   },
   songfacts: {
