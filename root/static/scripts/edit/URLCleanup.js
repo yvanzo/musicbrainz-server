@@ -797,8 +797,7 @@ const CLEANUPS = {
       return url;
     },
     validate: function (url, id) {
-      return _.includes(CLEANUPS.youtube.type, id)
-          && /^http:\/\/www\.youtube\.com\//.test(url);
+      return /^https:\/\/www\.youtube\.com\//.test(url);
     }
   },
   vgmdb: {
