@@ -878,15 +878,19 @@ const CLEANUPS = {
     match: [new RegExp("^(https?://)?([^/]+\\.)?setlist\\.fm","i")],
     type: LINK_TYPES.setlistfm,
     validate: function (url, id) {
-      switch (id) {
-        case LINK_TYPES.setlistfm.artist:
-          return /setlist\.fm\/setlists\//.test(url);
-        case LINK_TYPES.setlistfm.event:
-          return /setlist\.fm\/(setlist|festival)\//.test(url);
-        case LINK_TYPES.setlistfm.place:
-          return /setlist\.fm\/venue\//.test(url);
+      var m = /setlist\.fm\/([a-z]+)\//.exec(url);
+      if (m) {
+        var prefix = m[1];
+        switch (id) {
+          case LINK_TYPES.setlistfm.artist:
+            return prefix === 'setlists';
+          case LINK_TYPES.setlistfm.event:
+            return prefix === 'setlist' || prefix === 'festival';
+          case LINK_TYPES.setlistfm.place:
+            return prefix === 'venue';
+        }
       }
-      return true;
+      return false;
     }
   },
   imslp: {
