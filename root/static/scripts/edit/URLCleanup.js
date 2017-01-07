@@ -859,15 +859,19 @@ const CLEANUPS = {
       return url.replace(/^http:\/\//, "https://");
     },
     validate: function (url, id) {
-      switch (id) {
-        case LINK_TYPES.songkick.artist:
-          return /songkick\.com\/artists\//.test(url);
-        case LINK_TYPES.songkick.event:
-          return /songkick\.com\/(concerts|festivals)\//.test(url);
-        case LINK_TYPES.songkick.place:
-          return /songkick\.com\/(venues|festivals)\//.test(url);
+      var m = /songkick\.com\/([a-z]+)\//.exec(url);
+      if (m) {
+        var prefix = m[1];
+        switch (id) {
+          case LINK_TYPES.songkick.artist:
+            return prefix === 'artists';
+          case LINK_TYPES.songkick.event:
+            return prefix === 'concerts' || prefix === 'festivals';
+          case LINK_TYPES.songkick.place:
+            return prefix === 'venues' || prefix === 'festivals';
+        }
       }
-      return true;
+      return false;
     }
   },
   setlistfm: {
