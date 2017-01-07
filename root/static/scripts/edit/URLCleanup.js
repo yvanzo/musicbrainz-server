@@ -849,7 +849,7 @@ const CLEANUPS = {
         case LINK_TYPES.bandcamp.label:
           return /^http:\/\/[^\/]+\.bandcamp\.com\/$/.test(url);
       }
-      return true;
+      return false;
     }
   },
   songkick: {
