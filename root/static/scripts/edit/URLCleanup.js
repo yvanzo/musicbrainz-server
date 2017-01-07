@@ -342,8 +342,8 @@ const CLEANUPS = {
           case LINK_TYPES.imdb.label:
           case LINK_TYPES.imdb.place:
             return type === 'company/co';
-          case LINK_TYPES.imdb.recording;
-          case LINK_TYPES.imdb.release;
+          case LINK_TYPES.imdb.recording:
+          case LINK_TYPES.imdb.release:
           case LINK_TYPES.imdb.release_group:
           case LINK_TYPES.imdb.work:
             return type === 'title/tt';
