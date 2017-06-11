@@ -99,7 +99,6 @@ sub validate_birth_date {
 sub _requires_not_limited {
     my ($self, $field) = @_;
     return $field->add_error(l('Spammers are not welcome, go away.')) unless $self->ctx->user->is_limited;
-    ;
 }
 
 sub validate_biography { return _requires_not_limited(@_); }
