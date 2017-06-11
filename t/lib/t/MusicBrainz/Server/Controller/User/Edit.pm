@@ -58,59 +58,58 @@ $mech->content_contains('new_email@example.com');
 };
 
 test 'Limited users cannot edit website and biography' => sub {
+    my $test = shift;
+    my $mech = $test->mech;
+    my $c    = $test->c;
 
-my $test = shift;
-my $mech = $test->mech;
-my $c    = $test->c;
+    MusicBrainz::Server::Test->prepare_test_database($c, '+editor');
 
-MusicBrainz::Server::Test->prepare_test_database($c, '+editor');
+    $mech->get('/login');
+    $mech->submit_form( with_fields => { username => 'new_editor', password => 'password' } );
 
-$mech->get('/login');
-$mech->submit_form( with_fields => { username => 'new_editor', password => 'password' } );
+    $mech->get_ok('/account/edit');
+    my $tx = test_xpath_html($mech->content);
+    html_ok($tx);
+    $tx->ok(selector_to_xpath('input#id-profile\\.email'), 'email field for all users');
+    $tx->not_ok(selector_to_xpath('input#id-profile\\.website'), 'no website field for limited users');
+    $tx->not_ok(selector_to_xpath('input#id-profile\\.biography'), 'no biography field for limited users');
 
-$mech->get_ok('/account/edit');
-my $tx = test_xpath_html($mech->content);
-html_ok($tx);
-$tx->ok(selector_to_xpath('input#id-profile\\.email'), 'email field for all users');
-$tx->not_ok(selector_to_xpath('input#id-profile\\.website'), 'no website field for limited users');
-$tx->not_ok(selector_to_xpath('input#id-profile\\.biography'), 'no biography field for limited users');
-
-$test->c->sql->do(<<EOSQL);
-    INSERT INTO edit (id, editor, type, status, expire_time, autoedit) VALUES
-        ( 1, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 2, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 3, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 4, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 5, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 6, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 7, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 8, 1, 1, $STATUS_APPLIED, now(), 0),
-        ( 9, 1, 1, $STATUS_APPLIED, now(), 0),
-        (10, 1, 1, $STATUS_APPLIED, now(), 0);
+    $test->c->sql->do(<<EOSQL);
+INSERT INTO edit (id, editor, type, status, expire_time, autoedit) VALUES
+    ( 1, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 2, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 3, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 4, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 5, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 6, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 7, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 8, 1, 1, $STATUS_APPLIED, now(), 0),
+    ( 9, 1, 1, $STATUS_APPLIED, now(), 0),
+    (10, 1, 1, $STATUS_APPLIED, now(), 0);
 EOSQL
 
-$mech->get_ok('/account/edit');
-$tx = test_xpath_html($mech->content);
-html_ok($tx);
-$tx->ok(selector_to_xpath('input#id-profile\\.email'), 'email field for all users');
-$tx->ok(selector_to_xpath('input#id-profile\\.website'), 'website field for normal (not imited) users');
-$tx->ok(selector_to_xpath('input#id-profile\\.biography'), 'biography field for normal (not limited) users');
+    $mech->get_ok('/account/edit');
+    $tx = test_xpath_html($mech->content);
+    html_ok($tx);
+    $tx->ok(selector_to_xpath('input#id-profile\\.email'), 'email field for all users');
+    $tx->ok(selector_to_xpath('input#id-profile\\.website'), 'website field for normal (not imited) users');
+    $tx->ok(selector_to_xpath('input#id-profile\\.biography'), 'biography field for normal (not limited) users');
 
-$mech->submit_form( with_fields => {
-    'profile.website' => 'foo',
-    'profile.biography' => 'hello world!',
-} );
-$mech->content_contains('Invalid URL format', "Invalid URL format 'foo' triggers validation failure.");
-$mech->submit_form( with_fields => {
-    'profile.website' => 'http://example.com/~new_editor/',
-    'profile.biography' => 'hello world!',
-    'profile.email' => 'new_email@example.com',
-} );
-$mech->content_contains('Your profile has been updated');
+    $mech->submit_form( with_fields => {
+        'profile.website' => 'foo',
+        'profile.biography' => 'hello world!',
+    } );
+    $mech->content_contains('Invalid URL format', "Invalid URL format 'foo' triggers validation failure.");
+    $mech->submit_form( with_fields => {
+        'profile.website' => 'http://example.com/~new_editor/',
+        'profile.biography' => 'hello world!',
+        'profile.email' => 'new_email@example.com',
+    } );
+    $mech->content_contains('Your profile has been updated');
 
-$mech->get('/user/new_editor');
-$mech->content_contains('http://example.com/~new_editor/');
-$mech->content_contains('hello world!');
+    $mech->get('/user/new_editor');
+    $mech->content_contains('http://example.com/~new_editor/');
+    $mech->content_contains('hello world!');
 };
 
 test 'After removing email address, editors cannot edit' => sub {
