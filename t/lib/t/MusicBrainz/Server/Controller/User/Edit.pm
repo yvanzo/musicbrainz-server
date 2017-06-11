@@ -1,6 +1,7 @@
 package t::MusicBrainz::Server::Controller::User::Edit;
 use Test::Routine;
 use Test::More;
+use MusicBrainz::Server::Constants qw( :edit_status );
 use MusicBrainz::Server::Test qw( html_ok test_xpath_html );
 use HTML::Selector::XPath 'selector_to_xpath';
 
@@ -70,11 +71,11 @@ $mech->submit_form( with_fields => { username => 'new_editor', password => 'pass
 $mech->get_ok('/account/edit');
 my $tx = test_xpath_html($mech->content);
 html_ok($tx);
-$tx->ok(selector_to_xpath('input#"id-profile.email"'), 'email field for all users');
-$tx->not_ok(selector_to_xpath('input#"id-profile.website"'), 'no website field for limited users');
-$tx->not_ok(selector_to_xpath('input#"id-profile.biography"'), 'no biography field for limited users');
+$tx->ok(selector_to_xpath('input#id-profile\\.email'), 'email field for all users');
+$tx->not_ok(selector_to_xpath('input#id-profile\\.website'), 'no website field for limited users');
+$tx->not_ok(selector_to_xpath('input#id-profile\\.biography'), 'no biography field for limited users');
 
-$test->c->sql->do(<<EOSQL, $editor->id);
+$test->c->sql->do(<<EOSQL);
     INSERT INTO edit (id, editor, type, status, expire_time, autoedit) VALUES
         ( 1, 1, 1, $STATUS_APPLIED, now(), 0),
         ( 2, 1, 1, $STATUS_APPLIED, now(), 0),
@@ -89,11 +90,11 @@ $test->c->sql->do(<<EOSQL, $editor->id);
 EOSQL
 
 $mech->get_ok('/account/edit');
-my $tx = test_xpath_html($mech->content);
+$tx = test_xpath_html($mech->content);
 html_ok($tx);
-$tx->ok(selector_to_xpath('input#"id-profile.email"'), 'email field for all users');
-$tx->ok(selector_to_xpath('input#"id-profile.website"'), 'website field for normal (not imited) users');
-$tx->ok(selector_to_xpath('input#"id-profile.biography"'), 'biography field for normal (not limited) users');
+$tx->ok(selector_to_xpath('input#id-profile\\.email'), 'email field for all users');
+$tx->ok(selector_to_xpath('input#id-profile\\.website'), 'website field for normal (not imited) users');
+$tx->ok(selector_to_xpath('input#id-profile\\.biography'), 'biography field for normal (not limited) users');
 
 $mech->submit_form( with_fields => {
     'profile.website' => 'foo',
@@ -101,18 +102,9 @@ $mech->submit_form( with_fields => {
 } );
 $mech->content_contains('Invalid URL format', "Invalid URL format 'foo' triggers validation failure.");
 $mech->submit_form( with_fields => {
-    'profile.birth_date.year' => 0,
-    'profile.birth_date.month' => 1,
-    'profile.birth_date.day' => 1
-} );
-$mech->content_contains('invalid date', "Invalid date 0-1-1 triggers validation failure.");
-$mech->submit_form( with_fields => {
     'profile.website' => 'http://example.com/~new_editor/',
     'profile.biography' => 'hello world!',
     'profile.email' => 'new_email@example.com',
-    'profile.birth_date.year' => '',
-    'profile.birth_date.month' => '',
-    'profile.birth_date.day' => ''
 } );
 $mech->content_contains('Your profile has been updated');
 
