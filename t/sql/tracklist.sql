@@ -104,6 +104,11 @@ INSERT INTO cdtoc (id, discid, freedb_id, track_count, leadout_offset, track_off
               (2, 'IeldkVfIh1wep_M8CMuDvA0nQ7Q-', '6309da09', 9, 189343,
               '{150,6614,32287,54041,61236,88129,92729,115276,153877}', FALSE);
 
+INSERT INTO medium_cdtoc (id, medium, cdtoc, edits_pending)
+       VALUES (1, 1, 1, 0),
+              (2, 4, 2, 0),
+              (3, 5, 2, 0);
+
 INSERT INTO link (id, link_type, attribute_count, begin_date_year, begin_date_month, begin_date_day, end_date_year, end_date_month, end_date_day, ended)
        VALUES (1, 151, 0, 1971, 2, NULL, 1972, 2, NULL, true);
 
