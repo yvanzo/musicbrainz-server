@@ -93,9 +93,6 @@ sub initialize {
     my $cdtoc_id = $opts{cdtoc_id}
         or die 'Missing CDTOC ID';
 
-    MusicBrainz::Server::Edit::Exceptions::NoChanges->throw
-        if $self->c->model('Medium')->perfect_match_cdtoc($medium_id, $cdtoc_id);
-
     my $medium = $self->c->model('Medium')->get_by_id($medium_id);
 
     $self->c->model('Release')->load($medium);
@@ -103,6 +100,9 @@ sub initialize {
     $self->c->model('Track')->load_for_mediums($medium);
 
     my $cdtoc = $self->c->model('CDTOC')->get_by_id($cdtoc_id);
+
+    MusicBrainz::Server::Edit::Exceptions::NoChanges->throw
+        if $self->c->model('MediumCDTOC')->get_by_medium_cdtoc($medium_id, $cdtoc_id)->is_perfect_match();
 
     $self->data({
         medium_id => $medium_id,

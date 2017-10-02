@@ -26,6 +26,23 @@ has 'medium' => (
     isa => 'Medium'
 );
 
+sub is_perfect_match
+{
+    my ($self) = @_;
+
+    my @info = @{ $self->cdtoc->track_details };
+    my @medium_tracks = @{ $self->medium->cdtoc_tracks };
+
+    return 0 unless $#info == $#medium_tracks;
+
+    for my $i (0..$#info) {
+        return 0 unless defined $medium_tracks[$i] && $medium_tracks[$i]->length == $info[$i]->{length_time};
+        $i++;
+    }
+
+    return 1;
+}
+
 __PACKAGE__->meta->make_immutable;
 no Moose;
 1;
