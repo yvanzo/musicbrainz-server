@@ -62,6 +62,7 @@ use MusicBrainz::Server::PagedReport;
     RecordingsWithoutVACredit
     RecordingsWithoutVALink
     RecordingsWithEarliestReleaseRelationships
+    RecordingsWithManyISRCs
     RecordingsWithVaryingTrackLengths
     RecordingsSameNameDifferentArtistsSameName
     ReleasedTooEarly
@@ -137,6 +138,7 @@ use MusicBrainz::Server::Report::PossibleCollaborations;
 use MusicBrainz::Server::Report::RecordingsWithoutVACredit;
 use MusicBrainz::Server::Report::RecordingsWithoutVALink;
 use MusicBrainz::Server::Report::RecordingsWithEarliestReleaseRelationships;
+use MusicBrainz::Server::Report::RecordingsWithManyISRCs;
 use MusicBrainz::Server::Report::RecordingsWithVaryingTrackLengths;
 use MusicBrainz::Server::Report::RecordingsSameNameDifferentArtistsSameName;
 use MusicBrainz::Server::Report::ReleasedTooEarly;

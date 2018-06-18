@@ -1,0 +1,49 @@
+[%- WRAPPER 'layout.tt' title=l('Recordings with multiple ISRCs') full_width=1 -%]
+
+<h1>[% l('Recordings with multiple ISRCs') %]</h1>
+
+<ul>
+    <li>[% l('This report lists {recording_doc|recordings} that are attached to
+              more than one {isrc_doc|ISRC}.  It is usually the case when a
+              recording with different mastering has been registered under
+              different ISRCs, whereas MusicBrainz does not have separate
+              recording for remastered version of recording, according to the
+              current {recording_style_doc|style guidelines for recording}.',
+              { isrc_doc => doc_link('ISRC'),
+                recording_doc => doc_link('Recording'),
+                recording_style_doc => doc_link('Style/Recording') }) %]</li>
+    <li>[% l('Total recordings found: {count}', { count => pager.total_entries }) %]</li>
+    <li>[% l('Generated on {date}', { date => UserDate.format(generated) }) %]</li>
+    [%- INCLUDE 'report/filter_link.tt' -%]
+</ul>
+
+[%- WRAPPER 'components/with-pager.tt' -%]
+<table class="tbl">
+    <thead>
+        <tr>
+            <th>[% l('Recording') %]</th>
+            <th>[% l('Artist') %]</th>
+            <th>[% l('ISRC') %]</th>
+        </tr>
+    </thead>
+    <tbody>
+        [%- lastrid = 0 -%]
+        [%- FOR item IN items -%]
+        [% IF lastrid != item.recording.id %]
+            <tr class="even">
+                <td>[% link_entity(item.recording) %] ([% item.isrccount %])</td>
+                <td>[% artist_credit(item.recording.artist_credit) %]</td>
+                <td></td>
+            </tr>
+            [% lastrid = item.recording.id %]
+        [%- END -%]
+        <tr>
+            <td colspan="2"></td>
+            <td><a href="[% c.uri_for_action('/isrc/show', [ item.isrc ]) %]">[% item.isrc %]</a></td>
+        </tr>
+        [%- END -%]
+    </tbody>
+</table>
+[%- END -%]
+
+[%- END -%]
