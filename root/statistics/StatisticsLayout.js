@@ -13,7 +13,6 @@ import type {Node as ReactNode} from 'react';
 
 import Layout from '../layout';
 import Tabs from '../components/Tabs';
-import manifest from '../static/manifest';
 import {l_statistics as l} from '../static/scripts/common/i18n/statistics';
 
 type StatisticsLayoutPropsT = {|
@@ -33,7 +32,7 @@ type TabPropsT = {
 
 const LinkStatisticsTab = ({link, title, page, selected}: TabPropsT) => (
   <li className={page === selected ? 'sel' : ''}>
-    <a href={link}>{title}</a>
+    <a href={link}>{l(title)}</a>
   </li>
 );
 
