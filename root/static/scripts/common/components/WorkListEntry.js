@@ -47,15 +47,19 @@ export const WorkListRow = ({
     ) : null}
     <td><EntityLink entity={work} /></td>
     <td>
-      <ArtistRoles relations={work.writers} />
+      {work.writers.length
+        ? <ArtistRoles relations={work.writers} />
+        : l('-')}
     </td>
     <td>
       <ul>
-        {work.artists.map((artist, i) => (
-          <li key={i}>
-            <ArtistCreditLink artistCredit={artist} />
-          </li>
-        ))}
+        {work.artists.length
+          ? work.artists.map((artist, i) => (
+            <li key={i}>
+              <ArtistCreditLink artistCredit={artist} />
+            </li>
+          ))
+          : l('-')}
       </ul>
     </td>
     {hasIswcColumn ? (
