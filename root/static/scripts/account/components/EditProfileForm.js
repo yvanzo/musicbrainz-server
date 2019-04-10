@@ -67,7 +67,7 @@ const genderOptions = {
   options: [
     {label: N_l('Male'), value: 1},
     {label: N_l('Female'), value: 2},
-    {label: N_l('Other'), value: 3},
+    {label: N_lp('Other', 'gender option'), value: 3},
   ],
 };
 
