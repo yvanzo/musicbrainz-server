@@ -30,6 +30,7 @@ Contributing
 ------------
 
 Please submit all patches to [GitHub](https://github.com/metabrainz/musicbrainz-server/pulls) for review.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 License
 -------
