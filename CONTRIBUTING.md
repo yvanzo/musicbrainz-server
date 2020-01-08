@@ -28,7 +28,9 @@ Additionally, we start the subject line with ticket reference if applicable.
 
 If your change is large or relevant to users, it should have a ticket, see
 [tickets](https://tickets.metabrainz.org/issues/?jql=project%20%3D%20MBS),
-create one if necessary.  It will be used to generate release notes.
+create one if necessary.  It will be used to follow the progress of
+the change and to generate the release notes that are made available
+to users on the blog.
 
 Untracked changes are typos, comments, coding style changes, automated
 dependency update, unnoticeable refactor, and so on.
