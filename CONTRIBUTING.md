@@ -20,7 +20,7 @@ We follow the generally accepted [seven rules of a great Git commit message
 1. Wrap the body at 72 characters
 1. Use the body to explain _what_ and _why_ vs. _how_
 
-Additionally, we start subject with ticket reference if applicable.
+Additionally, we start the subject line with ticket reference if applicable.
 
 ### Pull request
 
