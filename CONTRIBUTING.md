@@ -3,7 +3,7 @@
 Thank you for considering contributing to MusicBrainz Server.
 
 Get started with https://musicbrainz.org/doc/Development first,
-continue with below additional guidelines then.
+then continue reading with below additional guidelines.
 
 ## Submitting changes
 
