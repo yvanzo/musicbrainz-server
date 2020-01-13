@@ -9,8 +9,8 @@ then continue reading with below additional guidelines.
 
 ### Commit message
 
-We follow the generally accepted [seven rules of a great Git commit message
-](https://chris.beams.io/posts/git-commit/#seven-rules):
+Please follow the generally accepted [seven rules of a great Git
+commit message](https://chris.beams.io/posts/git-commit/#seven-rules):
 
 1. Separate subject from body with a blank line
 1. Limit the subject line to 50 characters
@@ -20,7 +20,7 @@ We follow the generally accepted [seven rules of a great Git commit message
 1. Wrap the body at 72 characters
 1. Use the body to explain _what_ and _why_ vs. _how_
 
-Additionally, we start the subject line with ticket reference if applicable.
+Additionally, start the subject line with ticket reference if applicable.
 
 ### Pull request
 
