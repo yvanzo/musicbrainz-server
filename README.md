@@ -35,7 +35,8 @@ See the [contributing guidelines](CONTRIBUTING.md).
 License
 -------
 
-MusicBrainz Server is released under the GPLv2 or later. See COPYING.
+MusicBrainz Server is released under the GPLv2 or later.
+See the [licenses notice](COPYING.md).
 
 Further reading
 ---------------
