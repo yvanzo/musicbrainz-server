@@ -39,7 +39,7 @@ dependency update, unnoticeable refactor, and so on.
 
 Describe your change with a short imperative title (like this)
 
-If your change relates to a ticket, see [above](#ticket), please make sure you
+If your change relates to a ticket (see [above](#ticket)), please make sure you
 prefix your pull request title with `MBS-XXX: ` in order for our
 ticket tracker to link your pull request to that ticket, e.g.
 
