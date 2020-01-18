@@ -33,7 +33,7 @@ the change and to generate the release notes that are made available
 to users on the blog.
 
 Untracked changes are typos, comments, coding style changes, automated
-dependency update, unnoticeable refactor, and so on.
+dependency updates, unnoticeable refactoring, and so on.
 
 #### Title
 
