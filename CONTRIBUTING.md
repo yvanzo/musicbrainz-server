@@ -46,7 +46,7 @@ ticket tracker to link your pull request to that ticket, e.g.
 > MBS-XXX: Title
 
 If your change completely resolves a ticket, please
-prefix title with either `Fix ` for a bugfix or `Implement ` for a ticket of
+prefix the title with either `Fix ` for a bugfix or `Implement ` for a ticket of
 some other type in order for our ticket tracker to transition that ticket, e.g.
 
 > Fix MBS-XXX: Title
