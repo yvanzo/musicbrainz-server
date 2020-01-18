@@ -4,8 +4,8 @@
 
     Use this template to help us review your change. Not everything is required,
     depending on your change. Keep or delete what is relevant for your change.
-    Remember that it helps us review if you give more helpful info for us to
-    understand your change.
+    Remember that the more helpful info your pull request includes,
+    the easier it is for us to understand and review your changes.
 
     Ensure that you’ve read through and followed the Contributing Guidelines, at
     https://github.com/metabrainz/musicbrainz-server/blob/master/CONTRIBUTING.md
