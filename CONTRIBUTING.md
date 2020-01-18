@@ -20,7 +20,7 @@ commit message](https://chris.beams.io/posts/git-commit/#seven-rules):
 1. Wrap the body at 72 characters
 1. Use the body to explain _what_ and _why_ vs. _how_
 
-Additionally, start the subject line with ticket reference if applicable.
+Additionally, start the subject line with a ticket reference if applicable.
 
 ### Pull request
 
