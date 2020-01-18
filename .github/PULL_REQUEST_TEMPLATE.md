@@ -16,7 +16,7 @@
     Just give us an overview of your change; don’t go into technical details yet.
 -->
 
-:beginner: Describe this change in 1-2 sentences
+:beginner: Describe this change in 1-2 sentences.
 
 
 # Problem
