@@ -53,7 +53,7 @@ some other type in order for our ticket tracker to transition that ticket, e.g.
 
 > Implement MBS-XXX: Title
 
-To sum up, title should follow of one of the these forms:
+To sum up, the title should follow one of these forms:
 
 * Change small unnoticeable bits
 * MBS-XXX: Change things relevant to users
