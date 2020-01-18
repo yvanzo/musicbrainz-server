@@ -7,7 +7,7 @@
     Remember that it helps us review if you give more helpful info for us to
     understand your change.
 
-    Ensure that you’ve read through and followed the Contributing Guidelines, in
+    Ensure that you’ve read through and followed the Contributing Guidelines, at
     https://github.com/metabrainz/musicbrainz-server/blob/master/CONTRIBUTING.md
 -->
 
