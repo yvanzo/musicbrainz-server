@@ -1,5 +1,5 @@
 <!--
-    Hello! Thanks for submitting a pull request to MusicBrainz Server
+    Hello! Thanks for submitting a pull request to MusicBrainz Server.
     We appreciate your time and interest in helping our project!
 
     Use this template to help us review your change. Not everything is required,
