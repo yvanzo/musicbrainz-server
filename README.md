@@ -36,7 +36,7 @@ License
 -------
 
 MusicBrainz Server is released under the GPLv2 or later.
-See the [licenses notice](COPYING.md).
+See the [license notice](COPYING.md).
 
 Further reading
 ---------------
