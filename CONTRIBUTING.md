@@ -3,7 +3,7 @@
 Thank you for considering contributing to MusicBrainz Server.
 
 Get started with https://musicbrainz.org/doc/Development first,
-then continue reading with below additional guidelines.
+then continue reading the additional guidelines below.
 
 ## Submitting changes
 
@@ -59,4 +59,3 @@ To sum up, title should follow of one of the these forms:
 * MBS-XXX: Change things relevant to users
 * Fix MBS-XXX: Completely resolve a reported bug
 * Implement MBS-XXX: Completely resolve a ticket of some other type
-
