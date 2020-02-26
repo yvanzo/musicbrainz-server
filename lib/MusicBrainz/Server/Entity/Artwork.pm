@@ -85,16 +85,25 @@ sub filename
     return sprintf("mbid-%s-%d.%s", $self->release->gid, $self->id, $self->suffix);
 }
 
-sub image { my $self = shift; return $self->_urlprefix . "." . $self->suffix; }
+sub image
+{
+    my $self = shift;
+
+    return undef unless defined $self->suffix;
+
+    return $self->_urlprefix . "." . $self->suffix;
+}
+
 sub small_thumbnail { my $self = shift; return $self->_urlprefix . "-250.jpg"; }
 sub large_thumbnail { my $self = shift; return $self->_urlprefix . "-500.jpg"; }
 
 sub TO_JSON {
     my ($self) = @_;
+    my $image = $self->image;
 
     my $json = {
         comment => $self->comment,
-        image => $self->image,
+        defined $image ? image => $image : (),
         large_thumbnail => $self->large_thumbnail,
         mime_type => $self->mime_type,
         small_thumbnail => $self->small_thumbnail,
