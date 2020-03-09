@@ -88,6 +88,7 @@ export function defineArtistCreditColumn<D>(
       )
       : title),
     accessor: row => getArtistCredit(row)?.names[0].name ?? '',
+    className: 'artist',
     id: columnName,
   };
 }
@@ -354,7 +355,7 @@ export function defineSeriesNumberColumn(
 }
 
 export function defineTextColumn<D>(
-  getText: (D) => string,
+  getText: (D) => StrOrNum,
   columnName: string,
   title: string,
   order?: string = '',
@@ -447,6 +448,7 @@ export const ratingsColumn:
     Cell: ({row: {original}}) => <RatingStars entity={original} />,
     Header: N_l('Rating'),
     accessor: 'rating',
+    className: 'rating c',
   };
 
 export const seriesOrderingTypeColumn:
