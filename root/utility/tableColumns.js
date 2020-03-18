@@ -415,11 +415,12 @@ export function defineTextColumn<D>(
   };
 }
 
-export function defineTypeColumn(
+export function defineTypeColumn<R>(
+  getEntity: (R) => {+typeName: string, ...},
   typeContext: string,
   order?: string = '',
   sortable?: boolean = false,
-): ColumnOptions<{+typeName: string, ...}, string> {
+): ColumnOptions<R, string> {
   return {
     Cell: ({cell: {value}}) => (value
       ? lp_attributes(value, typeContext)
@@ -433,7 +434,7 @@ export function defineTypeColumn(
         />
       )
       : l('Type')),
-    accessor: 'typeName',
+    accessor: row => getEntity(row).typeName,
     id: 'type',
   };
 }

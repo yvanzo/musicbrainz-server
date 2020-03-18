@@ -19,17 +19,19 @@ import {
 
 type Props = {
   +$c: CatalystContextT,
-  +areas: $ReadOnlyArray<AreaT>,
   +checkboxes?: string,
+  +getArea?: (R) => AreaT,
   +order?: string,
+  +rows: $ReadOnlyArray<R>,
   +sortable?: boolean,
 };
 
 const AreaList = ({
   $c,
-  areas,
   checkboxes,
+  getArea = (row => row),
   order,
+  rows,
   sortable,
 }: Props) => {
   const columns = React.useMemo(
@@ -39,7 +41,12 @@ const AreaList = ({
         : null;
       const nameColumn =
         defineNameColumn<AreaT>(l('Area'), order, sortable);
-      const typeColumn = defineTypeColumn('area_type', order, sortable);
+      const typeColumn = defineTypeColumn<R>(
+        row => getArea(row),
+        'area_type',
+        order,
+        sortable,
+      );
 
       return [
         ...(checkboxColumn ? [checkboxColumn] : []),
@@ -50,7 +57,7 @@ const AreaList = ({
     [$c.user_exists, checkboxes, order, sortable],
   );
 
-  return <Table columns={columns} data={areas} />;
+  return <Table columns={columns} data={rows} />;
 };
 
 export default withCatalystContext(AreaList);
