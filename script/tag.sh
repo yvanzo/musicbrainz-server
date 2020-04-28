@@ -4,8 +4,15 @@ set -e -u
 
 SCRIPT_NAME=$(basename "$0")
 
+REMOTE='origin'
+
 HELP=$(cat <<EOH
-Usage: $SCRIPT_NAME
+Usage: $SCRIPT_NAME [<options>]
+
+Options:
+  -r, --remote REMOTE   Push tag to this remote instead of '$REMOTE'
+
+  -h, --help            Print this help message
 
 Create and push a Git tag on 'production' branch.
 EOH
@@ -15,6 +22,9 @@ if [[ $# -eq 1 && $1 =~ ^-*h(elp)?$ ]]
 then
   echo "$HELP"
   exit
+elif [[ $# -eq 2 && $1 =~ ^-r|--remote$ ]]
+then
+  REMOTE="$2"
 elif [[ $# -gt 0 ]]
 then
   echo >&2 "$SCRIPT_NAME: too many arguments"
@@ -44,6 +54,6 @@ read -e -i "$blog_url" -p 'Blog post URL? ' -r blog_url
 
 set -x
 git tag -u CE33CF04 "$tag" -m "See $blog_url for details" production
-git push origin "$tag"
+git push "$REMOTE" "$tag"
 
 # vi: set et sts=2 sw=2 ts=2 :
