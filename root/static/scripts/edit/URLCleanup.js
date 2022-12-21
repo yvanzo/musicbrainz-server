@@ -840,6 +840,43 @@ const CLEANUPS: CleanupEntries = {
       LINK_TYPES.streamingpaid,
       multiple(LINK_TYPES.downloadpurchase, LINK_TYPES.streamingpaid),
     ],
+    select: function (url, sourceType) {
+      const m = /^https:\/\/music\.apple\.com\/[a-z]{2}\/(album|artist|label|music-video)/.exec(url);
+      if (m) {
+        const prefix = m[1];
+        switch (prefix) {
+          case 'album':
+            if (sourceType === 'album') {
+              return [
+                LINK_TYPES.streamingpaid.release,
+              ];
+            }
+            break;
+          case 'artist':
+            if (sourceType === 'artist') {
+              return [
+                LINK_TYPES.streamingpaid.artist,
+              ];
+            }
+            break;
+          case 'label':
+            if (sourceType === 'label') {
+              return [
+                LINK_TYPES.streamingpaid.label,
+              ];
+            }
+            break;
+          default: // music-video
+            if (sourceType === 'recording') {
+              return [
+                LINK_TYPES.streamingpaid.recording,
+              ];
+            }
+            break;
+        }
+      }
+      return false;
+    },
     clean: function (url) {
       url = url.replace(/^https?:\/\/(?:(?:beta|geo)\.)?music\.apple\.com\/([a-z]{2}\/)?(artist|album|author|label|music-video)\/(?:[^?#\/]+\/)?(?:id)?([0-9]+)(?:\?.*)?$/, 'https://music.apple.com/$1$2/$3');
       // US page is the default, add its country-code to clarify (MBS-10623)

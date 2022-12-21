@@ -567,6 +567,7 @@ const testData = [
   {
                      input_url: 'http://music.apple.com/artist/hangry-angry-f/id444923726',
              input_entity_type: 'artist',
+    expected_relationship_type: 'streamingpaid',
 limited_link_type_combinations: [
                                   'downloadpurchase',
                                   'streamingpaid',
@@ -577,6 +578,7 @@ limited_link_type_combinations: [
   {
                      input_url: 'https://beta.music.apple.com/ca/artist/imposs/205021452',
              input_entity_type: 'artist',
+    expected_relationship_type: 'streamingpaid',
 limited_link_type_combinations: [
                                   'downloadpurchase',
                                   'streamingpaid',
@@ -587,6 +589,7 @@ limited_link_type_combinations: [
   {
                      input_url: 'https://music.apple.com/us/label/ghostly-international/1543968172',
              input_entity_type: 'label',
+    expected_relationship_type: 'streamingpaid',
 limited_link_type_combinations: [
                                   'downloadpurchase',
                                   'streamingpaid',
@@ -597,6 +600,7 @@ limited_link_type_combinations: [
   {
                      input_url: 'https://music.apple.com/ee/music-video/black-and-yellow/539886832?uo=4&mt=5&app=music',
              input_entity_type: 'recording',
+    expected_relationship_type: 'streamingpaid',
 limited_link_type_combinations: [
                                   'downloadpurchase',
                                   'streamingpaid',
@@ -607,6 +611,7 @@ limited_link_type_combinations: [
   {
                      input_url: 'https://music.apple.com/jp/album/uchiagehanabi-single/1263790414',
              input_entity_type: 'release',
+    expected_relationship_type: 'streamingpaid',
 limited_link_type_combinations: [
                                   'downloadpurchase',
                                   'streamingpaid',
