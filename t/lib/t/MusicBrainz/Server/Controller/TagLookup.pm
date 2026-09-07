@@ -6,6 +6,7 @@ use warnings;
 use HTTP::Response;
 use HTTP::Status qw( :constants );
 use LWP::UserAgent::Mockable;
+use Test::More;
 use Test::Routine;
 
 use MusicBrainz::Server::Test qw( html_ok );
@@ -180,6 +181,25 @@ test 'Can perform tag lookups with artist and release titles' => sub {
     $test->mech->content_contains('Make a donation now', 'has nag screen');
 
     LWP::UserAgent::Mockable->finished;
+};
+
+test 'MBS-14455: Tag lookup is filtered on depth' => sub {
+    my $test = shift;
+    my $mech = $test->mech;
+
+    no warnings 'redefine';
+    local *DBDefs::MAX_SEARCH_RESULTS = sub { 500 };
+
+    # limit 25 * page 21 = depth 525 > 500
+    $mech->get('/taglookup/index?tag-lookup.release=love&page=21');
+    is($mech->status, HTTP_BAD_REQUEST, 'Deep tag lookup gives a bad request error');
+    html_ok($mech->content);
+    $mech->content_contains('deemed invalid', 'Deep tag lookup gives an invalid search message');
+
+    # limit 25 * page 20 = depth 500
+    $mech->get_ok('/taglookup/index?tag-lookup.release=love&page=20',
+                  'Last page of tag lookup still works');
+    html_ok($mech->content);
 };
 
 1;

@@ -116,10 +116,35 @@ sub direct : Private
 
     my $type   = $form->field('type')->value;
     my $query  = $form->field('query')->value;
+    my $limit  = $form->field('limit')->value;
+
+    if (defined DBDefs->MAX_SEARCH_RESULTS) {
+        my $page = looks_like_number($c->request->query_params->{page})
+            ? $c->request->query_params->{page} : 1;
+        $page = max(1, $page);
+        my $depth = $page * $limit;
+        if ($depth > DBDefs->MAX_SEARCH_RESULTS) {
+            my %props = (
+                form => $form->TO_JSON,
+                error => 'Must retrieve at most ' .
+                    DBDefs->MAX_SEARCH_RESULTS .
+                    " search results, not $depth.",
+                query => $query,
+                type => $type,
+            );
+            $c->stash(
+                component_path => 'search/error/Invalid',
+                component_props => \%props,
+                current_view => 'Node',
+            );
+            $c->response->status(HTTP_BAD_REQUEST);
+            $c->detach;
+        }
+    }
 
     my $results = $self->_load_paged($c, sub {
        $c->model('Search')->search($type, $query, shift, shift);
-    }, limit => $form->field('limit')->value);
+    }, limit => $limit);
 
     my @entities = map { $_->entity } @$results;
 
@@ -287,6 +312,8 @@ sub do_external_search {
             component_props => \%props,
             current_view => 'Node',
         );
+
+        $c->response->status($code);
 
         $c->detach;
     }

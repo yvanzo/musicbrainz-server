@@ -5,6 +5,7 @@ use warnings;
 use HTTP::Response;
 use HTTP::Status qw( :constants );
 use LWP::UserAgent::Mockable;
+use Test::More;
 use Test::Routine;
 use MusicBrainz::Server::Test qw( html_ok );
 
@@ -105,6 +106,25 @@ test all => sub {
     $mech->content_contains('/artist/406bca37-056f-405e-a974-624864c9f641', 'has link to artist');
 
     LWP::UserAgent::Mockable->finished;
+};
+
+test 'MBS-14455: Indexed search is filtered on depth' => sub {
+    my $test = shift;
+    my $mech = $test->mech;
+
+    no warnings 'redefine';
+    local *DBDefs::MAX_SEARCH_RESULTS = sub { 500 };
+
+    # limit 25 * page 21 = depth 525 > 500
+    $mech->get('/search?query=Love&type=artist&limit=25&page=21');
+    is($mech->status, HTTP_BAD_REQUEST, 'Deep indexed search gives a bad request error');
+    html_ok($mech->content);
+    $mech->content_contains('deemed invalid', 'Deep indexed search gives an invalid search message');
+
+    # limit 25 * page 20 = depth 500
+    $mech->get_ok('/search?query=Love&type=artist&limit=25&page=20',
+                  'Last page of indexed search still works');
+    html_ok($mech->content);
 };
 
 1;

@@ -829,6 +829,18 @@ sub external_search
     load_class($entity_model);
     my $offset = ($page - 1) * $limit;
 
+    if (defined DBDefs->MAX_SEARCH_RESULTS) {
+        my $depth = $offset + $limit;
+        if ($depth > DBDefs->MAX_SEARCH_RESULTS) {
+            return {
+                error => 'Must retrieve at most ' .
+                    DBDefs->MAX_SEARCH_RESULTS .
+                    " search results, not $depth.",
+                code  => HTTP_BAD_REQUEST,
+            };
+        }
+    }
+
     $query = uri_escape_utf8($query);
     $type =~ s/release_group/release-group/;
 
