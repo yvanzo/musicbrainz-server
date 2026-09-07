@@ -20,6 +20,7 @@ component PaginatedSearchResults<T>(
   pager: PagerT,
   query: string,
   results: ReadonlyArray<SearchResultT<T>>,
+  uncappedTotalHits: number,
 ) {
   const $c = React.useContext(CatalystContext);
   const hasLastPage = pager.total_entries > 0;
@@ -28,7 +29,7 @@ component PaginatedSearchResults<T>(
     : null;
 
   return results.length ? (
-    <PaginatedResults pager={pager} query={query} search>
+    <PaginatedResults pager={pager} query={query} uncappedTotalHits={uncappedTotalHits} search>
       <table className="tbl">
         <thead>
           <tr>

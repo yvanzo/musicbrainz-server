@@ -104,8 +104,6 @@ test all => sub {
     $mech->content_contains('L.O.V.E.', 'has correct search result');
     $mech->content_contains('Love, Laura', 'has artist sortname');
     $mech->content_contains('/artist/406bca37-056f-405e-a974-624864c9f641', 'has link to artist');
-
-    LWP::UserAgent::Mockable->finished;
 };
 
 test 'MBS-14455: Indexed search is filtered on depth' => sub {
@@ -125,6 +123,18 @@ test 'MBS-14455: Indexed search is filtered on depth' => sub {
     $mech->get_ok('/search?query=Love&type=artist&limit=25&page=20',
                   'Last page of indexed search still works');
     html_ok($mech->content);
+
+    # limit 25 * page 1 = depth 25 < 500
+    $mech->get_ok('/search?query=Love&type=artist&limit=25',
+                  'First page of indexed search still works');
+    html_ok($mech->content);
+    $mech->content_contains('784 results', 'Show uncapped total hits');
+    # max search results 500 / limit 25 = last capped page 20
+    $mech->content_contains('page=20', 'Last page button matches the cap');
+    # uncapped total hits 784 / limit 25 =< last uncapped page 32
+    $mech->content_lacks('page=32', 'Pager does not offer pages beyond the cap');
+
+    LWP::UserAgent::Mockable->finished;
 };
 
 1;

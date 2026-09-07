@@ -988,12 +988,16 @@ sub external_search
             $self->c->model('Series')->load_entity_count(@entities);
         }
 
+        my $capped_total_hits = $total_hits;
+        $capped_total_hits = DBDefs->MAX_SEARCH_RESULTS if defined DBDefs->MAX_SEARCH_RESULTS &&
+            $total_hits > DBDefs->MAX_SEARCH_RESULTS;
+
         my $pager = Data::Page->new;
         $pager->current_page($page);
         $pager->entries_per_page($limit);
-        $pager->total_entries($total_hits);
+        $pager->total_entries($capped_total_hits);
 
-        return { pager => $pager, offset => $offset, results => \@results, last_updated => $last_updated };
+        return { pager => $pager, offset => $offset, results => \@results, last_updated => $last_updated, uncapped_total_hits => $total_hits };
     }
 }
 

@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( :constants );
+use JSON::XS qw( decode_json );
 use LWP::UserAgent::Mockable;
 use Test::More;
 use Test::Routine;
@@ -50,6 +51,12 @@ test 'MBS-14455: WS/2 search is filtered on depth' => sub {
     # limit 25 + offset 475 = 500
     $mech->get_ok('/ws/2/artist?query=Duo&limit=25&offset=475',
                   'Maxed out WS/2 search still works');
+
+    # limit 25 + offset 0 = 25 < 500
+    $mech->get_ok('/ws/2/artist?query=Duo&limit=25&offset=0&fmt=json',
+                  'First page of WS/2 search still works');
+    is(decode_json($mech->content)->{count}, 1755,
+        'First page of WS/2 search still counts uncapped total hits');
 
     LWP::UserAgent::Mockable->finished;
 };

@@ -179,8 +179,6 @@ test 'Can perform tag lookups with artist and release titles' => sub {
     $test->mech->content_contains('中島', 'has correct artist result');
     $test->mech->content_contains('LOVE', 'has correct release result');
     $test->mech->content_contains('Make a donation now', 'has nag screen');
-
-    LWP::UserAgent::Mockable->finished;
 };
 
 test 'MBS-14455: Tag lookup is filtered on depth' => sub {
@@ -200,6 +198,18 @@ test 'MBS-14455: Tag lookup is filtered on depth' => sub {
     $mech->get_ok('/taglookup/index?tag-lookup.release=love&page=20',
                   'Last page of tag lookup still works');
     html_ok($mech->content);
+
+    # limit 25 * page 1 = depth 25 < 500
+    $mech->get_ok('/taglookup/index?tag-lookup.release=love',
+                  'First page of tag lookup still works');
+    html_ok($mech->content);
+    $mech->content_contains('20,859 results', 'Show uncapped total hits');
+    # max search results 500 / limit 25 = last capped page 20
+    $mech->content_contains('page=20', 'Last page button matches the cap');
+    # uncapped total hits 20859 / limit 25 =< last uncapped page 835
+    $mech->content_lacks('page=835', 'Pager does not offer pages beyond the cap');
+
+    LWP::UserAgent::Mockable->finished;
 };
 
 1;

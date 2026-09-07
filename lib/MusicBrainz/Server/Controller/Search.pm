@@ -74,6 +74,7 @@ sub search : Path('')
                 pager => serialize_pager($stash->{pager}),
                 query => $stash->{query},
                 results => to_json_array($stash->{results}),
+                uncappedTotalHits => $stash->{uncapped_total_hits} // 0,
             );
 
             $c->stash(
@@ -235,6 +236,15 @@ sub direct : Private
         $c->model('ArtistCredit')->load(@entities);
     }
 
+    if (defined DBDefs->MAX_SEARCH_RESULTS) {
+        my $pager = $c->stash->{pager};
+        my $total_hits = $pager->total_entries;
+        if ($total_hits > DBDefs->MAX_SEARCH_RESULTS) {
+            $c->stash->{uncapped_total_hits} = $total_hits;
+            $pager->total_entries(DBDefs->MAX_SEARCH_RESULTS);
+        }
+    }
+
     $c->stash(
         query    => $query,
         results  => $results,
@@ -323,6 +333,7 @@ sub do_external_search {
         $c->stash->{offset}   = $ret->{offset};
         $c->stash->{results}  = $ret->{results};
         $c->stash->{last_updated}  = $ret->{last_updated};
+        $c->stash->{uncapped_total_hits}  = $ret->{uncapped_total_hits};
     }
 }
 

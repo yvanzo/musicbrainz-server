@@ -104,6 +104,15 @@ test 'MBS-14455: Direct search is filtered on depth' => sub {
     $mech->get_ok('/search?limit=25&method=direct&page=20&query=Kate&type=artist',
                   'Last page of direct search still works');
     html_ok($mech->content);
+
+    # limit 25 * page 1 = depth 25 < 500
+    $mech->get_ok('/search?limit=25&method=direct&query=Kate&type=artist',
+                  'First page of indexed search still works');
+    html_ok($mech->content);
+
+    # Note: Since direct search is implemented with hard_search_limit,
+    # the returned total number of hits is not accurate, it actually
+    # depends on the requested page, thus not testing the pager here.
 };
 
 1;

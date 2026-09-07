@@ -20,6 +20,7 @@ component PaginatedResults(
   pager: PagerT,
   pageVar?: 'apps_page' | 'page' | 'tokens_page',
   query?: string,
+  uncappedTotalHits?: number = 0,
   search: boolean = false,
   total: boolean = false,
 ) {
@@ -31,6 +32,7 @@ component PaginatedResults(
       pageVar={pageVar}
     />
   );
+  const totalCount = Math.max(pager.total_entries, uncappedTotalHits);
 
   return (
     <>
@@ -41,16 +43,16 @@ component PaginatedResults(
             texp.ln(
               'Found {n} result',
               'Found {n} results',
-              pager.total_entries,
-              {n: formatCount($c, pager.total_entries)},
+              totalCount,
+              {n: formatCount($c, totalCount)},
             )
           ) : (
             texp.ln(
               'Found {n} result for "{q}"',
               'Found {n} results for "{q}"',
-              pager.total_entries,
+              totalCount,
               {
-                n: formatCount($c, pager.total_entries),
+                n: formatCount($c, totalCount),
                 q: query,
               },
             )
