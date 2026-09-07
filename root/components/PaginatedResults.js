@@ -32,6 +32,9 @@ component PaginatedResults(
       pageVar={pageVar}
     />
   );
+  const isLastCappedPage =
+    uncappedTotalHits > pager.total_entries &&
+    pager.current_page === pager.last_page;
   const totalCount = Math.max(pager.total_entries, uncappedTotalHits);
 
   return (
@@ -56,6 +59,14 @@ component PaginatedResults(
                 q: query,
               },
             )
+          )}
+        </p>
+      ) : null}
+      {isLastCappedPage ? (
+        <p>
+          {texp.l(
+            'Only the first {n} results could be returned.',
+            {n: pager.total_entries},
           )}
         </p>
       ) : null}
