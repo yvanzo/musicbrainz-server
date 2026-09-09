@@ -997,7 +997,13 @@ sub external_search
         $pager->entries_per_page($limit);
         $pager->total_entries($capped_total_hits);
 
-        return { pager => $pager, offset => $offset, results => \@results, last_updated => $last_updated, uncapped_total_hits => $total_hits };
+        return {
+            pager => $pager,
+            offset => $offset,
+            results => \@results,
+            last_updated => $last_updated,
+            uncapped_total_hits => $total_hits,
+        };
     }
 }
 

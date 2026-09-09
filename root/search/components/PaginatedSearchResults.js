@@ -29,7 +29,12 @@ component PaginatedSearchResults<T>(
     : null;
 
   return results.length ? (
-    <PaginatedResults pager={pager} query={query} uncappedTotalHits={uncappedTotalHits} search>
+    <PaginatedResults
+      pager={pager}
+      query={query}
+      search
+      uncappedTotalHits={uncappedTotalHits}
+    >
       <table className="tbl">
         <thead>
           <tr>
